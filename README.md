@@ -52,6 +52,9 @@ systemLog:
    logAppend: true
 ```
 
+## pre-built binaries
+- [TODO](https://github.com/123swk123/mongodb-armv8-a)
+
 ## Mongodb community on aarch64 (ISA: armv8)
 - [Core dump on MongoDB 5.0 on RPi 4](https://www.mongodb.com/community/forums/t/core-dump-on-mongodb-5-0-on-rpi-4/115291)
 - [Build advice for arm64/aarch64?](https://www.mongodb.com/community/forums/t/build-advice-for-arm64-aarch64/16736)
