@@ -66,7 +66,7 @@ systemLog:
 	- --experimental-optimization=O3 # gcc -O3 optimization
 	- --server-js=off # disable java script support
 	- --ssl=off # turn off SSL, this is creating link error
- - --variables_files='./etc/scons/developer_versions.vars' # uses git describe to prepare the version string
+ 	- --variables_files='./etc/scons/developer_versions.vars' # uses git describe to prepare the version string
 
 ## TODO
 ### ssl=off link errors
