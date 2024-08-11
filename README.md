@@ -53,9 +53,9 @@ systemLog:
 ```
 
 ## Mongodb community on aarch64 (ISA: armv8)
+- [Core dump on MongoDB 5.0 on RPi 4](https://www.mongodb.com/community/forums/t/core-dump-on-mongodb-5-0-on-rpi-4/115291)
 - [Build advice for arm64/aarch64?](https://www.mongodb.com/community/forums/t/build-advice-for-arm64-aarch64/16736)
 - [Add MongoDB 4.2 ARM64 builds for Raspberry Pi OS 64 bit (Debian Buster)](https://www.mongodb.com/community/forums/t/add-mongodb-4-2-arm64-builds-for-raspberry-pi-os-64-bit-debian-buster/5046)
-- [Core dump on MongoDB 5.0 on RPi 4](https://www.mongodb.com/community/forums/t/core-dump-on-mongodb-5-0-on-rpi-4/115291)
 
 ## Random notes
 ### How to get various build options?
