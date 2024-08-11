@@ -2,6 +2,24 @@
 
 ## For version 7.xx
 
+This repo helps you to cross-compile mongodb for ISA armv8 using x86 Desktop/Server host machines.
+
+we use chroot and debootstrap to prepare rootfs of arm64 ubuntu jammy (22.04), during this phase we also install mongodb target build dependency packages
+`libcurl4-openssl-dev`
+
+then we pass this rootfs to gcc as system root which should be enough to finish the cross-build smoothly.
+
+## Host (x86) side preparations
+
+- Install the tools
+  ```
+  sudo apt update && sudo apt install debootstrap chroot fakeroot fakechroot qemu qemu-user-static
+  ```
+- Prepare the rootfs for Ubuntu jammy
+  ```
+  ./prepare-rootfs.sh arm64 jammy cache fs
+  ```
+
 ### Build, release profile
 
 Configure the build and generate Ninja files
@@ -9,8 +27,8 @@ Configure the build and generate Ninja files
 buildscripts/scons.py\
  CC=aarch64-linux-gnu-gcc\
  CXX=aarch64-linux-gnu-g++\
- CCFLAGS='-march=armv8-a+crc -mtune=cortex-a53 --sysroot=/home_local/user/prjslocal/rootfs/fs/arm64/jammy'\
- LINKFLAGS='-march=armv8-a+crc -mtune=cortex-a53 --sysroot=/home_local/user/prjslocal/rootfs/fs/arm64/jammy'\
+ CCFLAGS='-march=armv8-a+crc -mtune=cortex-a53 --sysroot=$PWD/rootfs/fs/arm64/jammy'\
+ LINKFLAGS='-march=armv8-a+crc -mtune=cortex-a53 --sysroot=$PWD/rootfs/fs/arm64/jammy'\
  NINJA_PREFIX=release\
  VARIANT_DIR=release\
  --linker=gold\
