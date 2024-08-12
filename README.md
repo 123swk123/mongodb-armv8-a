@@ -12,13 +12,29 @@ then we pass this rootfs to gcc as system root which should be enough to finish 
 ## Host (x86) side preparations
 
 - Install the tools
-  ```
-  sudo apt update && sudo apt install qemu-system-misc qemu-user-static binfmt-support fakeroot fakechroot chroot debootstrap
+  ```shell
+  sudo apt update && sudo apt install qemu-system-misc qemu-user-static binfmt-support\
+  fakeroot fakechroot chroot debootstrap
   ```
 - Prepare the rootfs for Ubuntu jammy
   ```shell
   # Usage: ./prepare-rootfs.bash <arch> <linux_suite> <cache_dir> <output_dir>
   ./prepare-rootfs.sh arm64 jammy cache fs
+  export ROOTFS_DIR=$PWD/rootfs/fs/arm64/jammy
+  ```
+- Prepare mongodb
+  ```shell
+  wget https://github.com/mongodb/mongo/archive/refs/tags/r7.3.4-rc2.tar.gz &&\
+  tar -xf r7.3.4-rc2.tar.gz && cd mongo-r7.3.4-rc2
+
+  # do the python virtual environment setup and poetry setup as per
+  # https://github.com/mongodb/mongo/blob/master/docs/building.md
+
+  # I used pyenv based python installation, so here is how I did.
+  pyenv virtualenv 3.10.14 mongo-build-v7
+  pyenv activate mongo-build-v7
+  python -m pip install poetry
+  PIP_USE_PEP517=1 PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring poetry install --no-root --sync
   ```
 
 ### Build, release profile
@@ -28,8 +44,8 @@ Configure the build and generate Ninja files
 buildscripts/scons.py\
  CC=aarch64-linux-gnu-gcc\
  CXX=aarch64-linux-gnu-g++\
- CCFLAGS='-march=armv8-a+crc -mtune=cortex-a53 --sysroot=$PWD/rootfs/fs/arm64/jammy'\
- LINKFLAGS='-march=armv8-a+crc -mtune=cortex-a53 --sysroot=$PWD/rootfs/fs/arm64/jammy'\
+ CCFLAGS='-march=armv8-a+crc -mtune=cortex-a53 --sysroot=$ROOTFS_DIR'\
+ LINKFLAGS='-march=armv8-a+crc -mtune=cortex-a53 --sysroot=$ROOTFS_DIR'\
  NINJA_PREFIX=release\
  VARIANT_DIR=release\
  --linker=gold\
